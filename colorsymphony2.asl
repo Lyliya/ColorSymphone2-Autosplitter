@@ -22,48 +22,65 @@ update
     //     print("[AUTOSPLITTER] LOAD");
     // }
     //print(current.scenename);
+    // if (old.scenename != current.scenename) {
+    //     print(current.scenename);
+    // }
 }
 
 startup
 {
     // Add all chapters
-    for (int chapters = 1; chapters < 8; chapters++) {
+    for (int chapters = 1; chapters < 7; chapters++) {
         settings.Add("ch" + chapters, true, "Chapter " + chapters);
     }
+    settings.Add("ch7", true, "Chapter 7 (It will split automatically when you'll take the last color at 7-7)");
 
-    // Chapter 1
-    for (int level = 7; level < 22; level++) {
-        settings.Add("level_"+level, level == 21, "Level " + (level - 6), "ch1");
+    // // Chapter 1
+    // for (int level = 7; level < 22; level++) {
+    //     settings.Add("level_"+level, level == 21, "Level " + (level - 6), "ch1");
+    // }
+
+    // // Chapter 2
+    // for (int level = 23; level < 38; level++) {
+    //     settings.Add("level_"+level, level == 37, "Level " + (level - 22), "ch2");
+    // }
+
+    // // Chapter 3
+    // for (int level = 39; level < 54; level++) {
+    //     settings.Add("level_"+level, level == 53, "Level " + (level - 38), "ch3");
+    // }
+
+    // // Chapter 4
+    // for (int level = 55; level < 70; level++) {
+    //     settings.Add("level_"+level, level == 69, "Level " + (level - 54), "ch4");
+    // }
+
+    // // Chapter 5
+    // for (int level = 71; level < 86; level++) {
+    //     settings.Add("level_"+level, level == 85, "Level " + (level - 70), "ch5");
+    // }
+
+    // // Chapter 6
+    // for (int level = 87; level < 102; level++) {
+    //     settings.Add("level_"+level, level == 101, "Level " + (level - 86), "ch6");
+    // }
+
+    // // Chapter 7
+    // for (int level = 103; level < 109; level++) {
+    //     settings.Add("level_"+level, false, "Level " + (level - 102), "ch7");
+    // }
+
+    for (int i = 0; i < 90; i++) {
+        int chapter = i / 15;
+        int level = i - (15 * chapter) + 1;
+
+        string chapterString = (chapter + 1).ToString().PadLeft(2, '0');
+        string levelString = (level).ToString().PadLeft(3, '0');
+        settings.Add("Ch" + chapterString + "Stage" + levelString, level % 15 == 0, "Level " + level, "ch" + (chapter + 1));
     }
 
-    // Chapter 2
-    for (int level = 23; level < 38; level++) {
-        settings.Add("level_"+level, level == 37, "Level " + (level - 22), "ch2");
-    }
-
-    // Chapter 3
-    for (int level = 39; level < 54; level++) {
-        settings.Add("level_"+level, level == 53, "Level " + (level - 38), "ch3");
-    }
-
-    // Chapter 4
-    for (int level = 55; level < 70; level++) {
-        settings.Add("level_"+level, level == 69, "Level " + (level - 54), "ch4");
-    }
-
-    // Chapter 5
-    for (int level = 71; level < 86; level++) {
-        settings.Add("level_"+level, level == 85, "Level " + (level - 70), "ch5");
-    }
-
-    // Chapter 6
-    for (int level = 87; level < 102; level++) {
-        settings.Add("level_"+level, level == 101, "Level " + (level - 86), "ch6");
-    }
-
-    // Chapter 7
-    for (int level = 103; level < 109; level++) {
-        settings.Add("level_"+level, false, "Level " + (level - 102), "ch7");
+    for (int i = 0; i < 6; i++) {
+        settings.Add("Ch07Stage" + i.ToString().PadLeft(3, '0'), false, "Level" + (i + 1), "ch7");
     }
 }
 
@@ -84,7 +101,7 @@ split
 {
 
     // Check Endgame
-    if (current.lvl == 110 && current.endgame == 0 && old.endgame == 1) {
+    if (current.scenename == "EndingStage" && current.endgame == 0 && old.endgame == 1) {
         return true;
     }
 
@@ -111,8 +128,8 @@ split
     // 103 Chapter 7 First lvl
     // 108 Chapter 7 last lvl
     // 109 Chapter 7 Select Stage screen
-    if (old.lvl < current.lvl && current.lvl > 7 && current.lvl != 22 && current.lvl != 38 && current.lvl != 54 && current.lvl != 70 && current.lvl != 86 && current.lvl != 102 && current.lvl != 109) {
-        return settings["level_"+old.lvl];
+    if (old.scenename != current.scenename) {
+        return settings[old.scenename];
     }
 }
 
