@@ -7,6 +7,8 @@ state("ColorSymphony2")
 {
     uint endgame : "mono.dll", 0x001F30AC, 0x94, 0xC, 0x34, 0xC, 0x24, 0xA8, 0x7BC;
     uint lvl : "mono.dll", 0x001F30AC, 0x204, 0xC, 0x1C4, 0x24, 0x4, 0x28, 0xF00;
+    //uint load : "mono.dll", 0x0020B554, 0x74, 0x168, 0x27C, 0x8, 0x24, 0xC;
+    string128 scenename : "mono.dll", 0x001F30AC, 0x24, 0xC, 0x14, 0x10, 0xC;
 }
 
 init
@@ -16,6 +18,10 @@ init
 
 update
 {
+    // if (current.load == 1) {
+    //     print("[AUTOSPLITTER] LOAD");
+    // }
+    //print(current.scenename);
 }
 
 startup
@@ -63,9 +69,12 @@ startup
 
 start
 {
-    if (current.lvl == 6 && old.lvl == 4) {
+    if (old.scenename == "MainMenu" && current.scenename == "Prologue") {
         return true;
     }
+    // if (current.lvl == 6 && old.lvl == 4) {
+    //     return true;
+    // }
 	// if (old.ingame == 0 && current.ingame == 1) {
     //     return true;
     // }
