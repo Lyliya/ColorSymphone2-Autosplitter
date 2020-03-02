@@ -79,8 +79,8 @@ startup
         settings.Add("Ch" + chapterString + "Stage" + levelString, level % 15 == 0, "Level " + level, "ch" + (chapter + 1));
     }
 
-    for (int i = 0; i < 6; i++) {
-        settings.Add("Ch07Stage" + i.ToString().PadLeft(3, '0'), false, "Level" + (i + 1), "ch7");
+    for (int i = 1; i < 7; i++) {
+        settings.Add("Ch07Stage" + i.ToString().PadLeft(3, '0'), false, "Level" + (i), "ch7");
     }
 }
 
