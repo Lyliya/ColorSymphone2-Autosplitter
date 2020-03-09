@@ -128,7 +128,7 @@ split
     // 103 Chapter 7 First lvl
     // 108 Chapter 7 last lvl
     // 109 Chapter 7 Select Stage screen
-    if (old.scenename != current.scenename) {
+    if (old.scenename != current.scenename && current.scenename != "ChSelMenu" && !current.scenename.Contains("StgMenu")) {
         return settings[old.scenename];
     }
 }
